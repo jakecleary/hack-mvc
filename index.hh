@@ -10,4 +10,4 @@ class Welcome
     }
 }
 
-new Hello;
+new Welcome;

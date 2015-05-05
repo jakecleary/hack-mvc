@@ -1,21 +1,18 @@
----
-vagrantfile-local:
+vagrantfile:
+    target: local
     vm:
         box: puphpet/ubuntu1404-x64
         box_url: puphpet/ubuntu1404-x64
-        hostname: ''
+        hostname: local.puphpet
         memory: '512'
         cpus: '1'
         chosen_provider: virtualbox
         network:
             private_network: 192.168.56.101
             forwarded_port:
-                SttHErNWF6L8:
-                    host: '5330'
+                vflnp_nb042hdrwcb0:
+                    host: '7438'
                     guest: '22'
-                yjl4ziiaF8jX:
-                    host: '3306'
-                    guest: '33060'
         post_up_message: ''
         provider:
             virtualbox:
@@ -35,11 +32,9 @@ vagrantfile-local:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            U68bHrXLpaNi:
-                owner: www-data
-                group: www-data
+            vflsf_842o8edhr0sm:
                 source: ./
-                target: /var/www
+                target: /var/www/hmvc.dev
                 sync_type: nfs
                 rsync:
                     args:
@@ -48,7 +43,10 @@ vagrantfile-local:
                         - '-z'
                     exclude:
                         - .vagrant/
-                    auto: 'false'
+                        - .git/
+                    auto: 'true'
+                owner: www-data
+                group: www-data
         usable_port_range:
             start: 10200
             stop: 10500
@@ -73,12 +71,62 @@ users_groups:
     install: '1'
     groups: {  }
     users: {  }
-cron:
-    install: '1'
-    jobs: {  }
 firewall:
     install: '1'
     rules: {  }
+cron:
+    install: '1'
+    jobs: {  }
+nginx:
+    install: '1'
+    settings:
+        default_vhost: 1
+        proxy_buffer_size: 128k
+        proxy_buffers: '4 256k'
+    upstreams: {  }
+    vhosts:
+        nxv_fkkjber0c5mi:
+            server_name: hmvc.dev
+            server_aliases:
+                - www.hmvc.dev
+            www_root: /var/www/hmvc.dev/public
+            listen_port: '80'
+            index_files:
+                - index.hh
+                - index.php
+                - index.html
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+                nxvl_32l54pplu44h:
+                    location: /
+                    autoindex: off
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.hh$is_args$args
+                    fastcgi: ''
+                    fastcgi_index: ''
+                    fastcgi_split_path: ''
+                nxvl_10cubd5hfr6d:
+                    location: '~ \.php$'
+                    autoindex: off
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: '127.0.0.1:9000'
+                    fastcgi_index: index.php
+                    fastcgi_split_path: '^(.+\.php)(/.*)$'
+                    fast_cgi_params_extra:
+                        - 'SCRIPT_FILENAME $request_filename'
+                        - 'APP_ENV dev'
+    proxies: {  }
 apache:
     install: 0
     settings:
@@ -89,9 +137,10 @@ apache:
         manage_group: false
         sendfile: 0
     modules:
+        - proxy_fcgi
         - rewrite
     vhosts:
-        6rahidptnosx:
+        av_5c1tkcu1eur7:
             servername: awesome.dev
             serveraliases:
                 - www.awesome.dev
@@ -99,9 +148,13 @@ apache:
             port: '80'
             setenv:
                 - 'APP_ENV dev'
+            custom_fragment: ''
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
             directories:
-                vjmu0lsl17xm:
-                    provider: directory
+                avd_ckk3gtrj9m4n:
                     path: /var/www/awesome
                     options:
                         - Indexes
@@ -110,48 +163,19 @@ apache:
                     allow_override:
                         - All
                     require:
-                        - all
-                        - granted
+                        - 'all granted'
                     custom_fragment: ''
-            engine: php
-            custom_fragment: ''
-            ssl_cert: ''
-            ssl_key: ''
-            ssl_chain: ''
-            ssl_certs_dir: ''
-    mod_pagespeed: 0
-nginx:
-    install: '1'
-    settings:
-        default_vhost: 1
-        proxy_buffer_size: 128k
-        proxy_buffers: '4 256k'
-    upstreams: {  }
-    vhosts:
-        u23e1sou6oea:
-            proxy: ''
-            server_name: hack.dev
-            server_aliases:
-                - www.hack.dev
-            www_root: /var/www/
-            listen_port: '80'
-            location: \.php$
-            index_files:
-                - index.html
-                - index.htm
-                - index.php
-                - index.hh
-            envvars:
-                - 'APP_ENV dev'
-            engine: php
-            client_max_body_size: 1m
-            ssl_cert: ''
-            ssl_key: ''
+                    files_match:
+                        avdfm_0lnor0w699xc:
+                            path: \.php$
+                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
+                            custom_fragment: ''
+                            provider: filesmatch
+                    provider: directory
 php:
-    install: 0
-    version: '56'
-    composer: '1'
-    composer_home: ''
+    install: '0'
+    settings:
+        version: '56'
     modules:
         php:
             - cli
@@ -164,20 +188,19 @@ php:
         display_errors: On
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
-    timezone: America/Chicago
-    mod_php: 0
-hhvm:
-    install: '1'
-    nightly: 0
+        date.timezone: UTC
+    fpm_ini:
+        error_log: /var/log/php-fpm.log
+    fpm_pools:
+        phpfp_306e7mj92dcs:
+            ini:
+                prefix: www
+                listen: '127.0.0.1:9000'
+                security.limit_extensions: .php
+                user: www-user
+                group: www-data
     composer: '1'
     composer_home: ''
-    settings:
-        host: 127.0.0.1
-        port: '9000'
-    ini:
-        display_errors: On
-        error_reporting: '-1'
-    timezone: null
 xdebug:
     install: '0'
     settings:
@@ -187,68 +210,98 @@ xdebug:
         xdebug.remote_enable: '1'
         xdebug.remote_handler: dbgp
         xdebug.remote_port: '9000'
+blackfire:
+    install: '0'
+    settings:
+        server_id: ''
+        server_token: ''
+        agent:
+            http_proxy: ''
+            https_proxy: ''
+            log_file: stderr
+            log_level: '1'
+        php:
+            agent_timeout: '0.25'
+            log_file: ''
+            log_level: '1'
 xhprof:
     install: '0'
 wpcli:
     install: '0'
-    version: v0.17.1
+    version: v0.19.0
 drush:
     install: '0'
     version: 6.3.0
 ruby:
     install: '1'
     versions: {  }
-nodejs:
-    install: '0'
-    npm_packages: {  }
 python:
     install: '1'
     packages: {  }
     versions: {  }
+nodejs:
+    install: '0'
+    npm_packages: {  }
+hhvm:
+    install: '1'
+    nightly: 0
+    composer: '1'
+    composer_home: ''
+    settings: {  }
+    server_ini:
+        hhvm.server.host: 127.0.0.1
+        hhvm.server.port: '9000'
+        hhvm.log.use_log_file: '1'
+        hhvm.log.file: /var/log/hhvm/error.log
+    php_ini:
+        display_errors: On
+        error_reporting: '-1'
+        date.timezone: UTC
 mysql:
     install: '1'
-    override_options: {  }
-    root_password: root
+    settings:
+        version: '5.6'
+        root_password: '123'
+        override_options: {  }
     adminer: 0
-    databases:
-        gLwSmTdfh6gl:
-            grant:
+    users:
+        mysqlnu_6mj5au0brzwx:
+            name: hmvc
+            password: '123'
+    databases: {  }
+    grants:
+        mysqlng_mn4eaymrw2wz:
+            user: root
+            table: '*.*'
+            privileges:
                 - ALL
-            name: hack
-            host: localhost
-            user: admin
-            password: root
-            sql_file: ''
 postgresql:
     install: '0'
     settings:
-        root_password: '123'
-        user_group: postgres
-        encoding: UTF8
-        version: '9.3'
+        global:
+            encoding: UTF8
+            version: '9.3'
+        server:
+            postgres_password: '123'
     databases: {  }
+    users: {  }
+    grants: {  }
     adminer: 0
-mariadb:
-    install: '0'
-    override_options: {  }
-    root_password: '123'
-    adminer: 0
-    databases: {  }
-    version: '10.0'
-sqlite:
-    install: '0'
-    adminer: 0
-    databases: {  }
 mongodb:
     install: '0'
     settings:
         auth: 1
+        bind_ip: 127.0.0.1
         port: '27017'
     databases: {  }
 redis:
     install: '0'
     settings:
         conf_port: '6379'
+sqlite:
+    install: '0'
+    adminer: 0
+    databases: {  }
 mailcatcher:
     install: '0'
     settings:
@@ -274,6 +327,9 @@ rabbitmq:
     install: '0'
     settings:
         port: '5672'
+    users: {  }
+    vhosts: {  }
+    plugins: {  }
 elastic_search:
     install: '0'
     settings:
@@ -284,4 +340,3 @@ solr:
     settings:
         version: 4.10.2
         port: '8984'
-

@@ -1,0 +1,19 @@
+{
+    "name": "jakecleary/hack-mvc",
+    "description": "A basic MVC system built in Hack.",
+    "keywords": ["hack", "mvc"],
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jake Cleary",
+            "email": "shout@jakecleary.net",
+            "homepage": "http://jakecleary.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "HackMvc\\": "app/"
+        }
+    }
+}

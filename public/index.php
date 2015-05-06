@@ -3,7 +3,7 @@
 /**
  * Define the core paths - the app folder and document root.
  */
-define('APP_FOLDER', realpath(__DIR__.'/../'));
+define('APP_FOLDER', realpath(__DIR__ . '/../'));
 define('APP_PUBLIC', realpath(__DIR__));
 
 /**
@@ -14,7 +14,8 @@ require_once APP_FOLDER . '/vendor/autoload.php';
 /**
  * Let's go!
  */
-function main(): void {
+function main(): void
+{
     new HackMvc\Welcome('goodbye');
 }
 

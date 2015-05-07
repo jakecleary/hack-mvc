@@ -13,7 +13,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "HackMvc\\": "app/"
+            "Gob\\": "app/",
+            "Michael\\": "lib/"
         }
     }
 }

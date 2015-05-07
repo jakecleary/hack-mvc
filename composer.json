@@ -1,7 +1,7 @@
 {
     "name": "jakecleary/hack-mvc",
-    "description": "A basic MVC system built in Hack.",
-    "keywords": ["hack", "mvc"],
+    "description": "A basic MVC framework built in Hack.",
+    "keywords": ["hack", "framework"],
     "type": "project",
     "license": "MIT",
     "authors": [

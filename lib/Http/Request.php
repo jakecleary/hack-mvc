@@ -51,27 +51,27 @@ class Request<T>
         $this->cookies = $cookies;
     }
 
-    public function getPost(): array
+    public function getPost(): array<T>
     {
         return $this->post;
     }
 
-    public function getGet(): array
+    public function getGet(): array<T>
     {
         return $this->get;
     }
 
-    public function getServer(): array
+    public function getServer(): array<T>
     {
         return $this->server;
     }
 
-    public function getFiles(): array
+    public function getFiles(): array<T>
     {
         return $this->files;
     }
 
-    public function getCookie(): array
+    public function getCookie(): array<T>
     {
         return $this->cookie;
     }

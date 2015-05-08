@@ -12,12 +12,12 @@ class Request<T>
     /**
      * $_GET data.
      */
-    public array<T> $query;
+    public array<T> $get;
 
     /**
      * $_POST data.
      */
-    public array<T> $request;
+    public array<T> $post;
 
     /**
      * $_SERVER data.
@@ -38,27 +38,27 @@ class Request<T>
      * Capture the request and build up the class.
      */
     public function __construct(
-        array<T> $query,
-        array<T> $request,
+        array<T> $get,
+        array<T> $post,
         array<T> $server,
         array<T> $files,
         array<T> $cookies
     ) {
-        $this->query = $query;
-        $this->request = $request;
+        $this->get = $get;
+        $this->post = $post;
         $this->server = $server;
         $this->files = $files;
         $this->cookies = $cookies;
     }
 
-    public function getQuery(): array
+    public function getPost(): array
     {
-        return $this->query;
+        return $this->post;
     }
 
-    public function getRequest(): array
+    public function getGet(): array
     {
-        return $this->query;
+        return $this->get;
     }
 
     public function getServer(): array

@@ -1,7 +1,7 @@
-<?hh //strict
+<?hh
 
 /**
- * Define the core paths - the app folder and document root.
+ * Define the core paths - the app folder and document :root.
  */
 define('APP_FOLDER', realpath(__DIR__ . '/../'));
 define('APP_PUBLIC', realpath(__DIR__));
@@ -16,7 +16,11 @@ require_once APP_FOLDER . '/vendor/autoload.php';
  */
 function main(): void
 {
-    new Alpha\Welcome('goodbye');
+    $request = new Omega\Http\Request($_GET, $_POST, $_SERVER, $_FILES, $_COOKIE);
+
+    echo '<pre>';
+    var_dump($request->getServer());
+    echo '</pre>';
 }
 
 main();

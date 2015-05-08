@@ -1,61 +1,78 @@
 <?hh //strict
 
-namespase Michael;
+namespace Michael\Http;
 
 /**
  * Class to encapsulate the HTTP requests to the application.
  *
  * Mostly a port of Symfony\Component\HttpFoundation\Request
  */
-class Request
+class Request<T>
 {
-    /**
-     * Custom request parameters.
-     */
-    public Map $attributes;
-
     /**
      * $_GET data.
      */
-    public Map $query;
+    public array<T> $query;
 
     /**
      * $_POST data.
      */
-    public Map $request;
+    public array<T> $request;
 
     /**
      * $_SERVER data.
      */
-    public Map $server;
+    public array<T> $server;
 
     /**
      * $_FILES data.
      */
-    public Map $files;
+    public array<T> $files;
 
     /**
      * $_COOKIE data.
      */
-    public Map $cookies;
-
-    /**
-     * Request headers (taken from $_SERVER).
-     */
-    public Map $headers;
+    public array<T> $cookies;
 
     /**
      * Capture the request and build up the class.
      */
     public function __construct(
-        array $attributes,
-        array $query,
-        array $request,
-        array $server,
-        array $files,
-        array $cookies,
-        array $headers
+        array<T> $query,
+        array<T> $request,
+        array<T> $server,
+        array<T> $files,
+        array<T> $cookies
     ) {
-        // TODO: Build the request object.
+        $this->query = $query;
+        $this->request = $request;
+        $this->server = $server;
+        $this->files = $files;
+        $this->cookies = $cookies;
+    }
+
+    public function getQuery(): array
+    {
+        return $this->query;
+    }
+
+    public function getRequest(): array
+    {
+        return $this->query;
+    }
+
+    public function getServer(): array
+    {
+        return $this->server;
+    }
+
+    public function getFiles(): array
+    {
+        return $this->files;
+    }
+
+    public function getCookie(): array
+    {
+        return $this->cookie;
     }
 }

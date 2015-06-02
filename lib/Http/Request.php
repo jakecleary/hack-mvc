@@ -7,71 +7,84 @@ namespace Omega\Http;
  *
  * Mostly a port of Symfony\Component\HttpFoundation\Request
  */
-class Request<T>
+class Request<Tk, Tv>
 {
     /**
      * $_GET data.
      */
-    public array<T> $get;
+    public Map<Tk, Tv> $get = Map{};
 
     /**
      * $_POST data.
      */
-    public array<T> $post;
+    public Map<Tk, Tv> $post = Map{};
 
     /**
      * $_SERVER data.
      */
-    public array<T> $server;
+    public Map<Tk, Tv> $server = Map{};
 
     /**
      * $_FILES data.
      */
-    public array<T> $files;
+    public Map<Tk, Tv> $files = Map{};
 
     /**
      * $_COOKIE data.
      */
-    public array<T> $cookies;
+    public Map<Tk, Tv> $cookie = Map{};
 
     /**
      * Capture the request and build up the class.
      */
     public function __construct(
-        array<T> $get,
-        array<T> $post,
-        array<T> $server,
-        array<T> $files,
-        array<T> $cookies
+        array<Tk, Tv> $get,
+        array<Tk, Tv> $post,
+        array<Tk, Tv> $server,
+        array<Tk, Tv> $files,
+        array<Tk, Tv> $cookies
     ) {
-        $this->get = $get;
-        $this->post = $post;
-        $this->server = $server;
-        $this->files = $files;
-        $this->cookies = $cookies;
+        // $this->get = $get;
+        // $this->post = $post;
+        // $this->server = $server;
+
+        foreach($server as $key => $value) {
+            $this->server[$key] = $value;
+        }
+
+        // $this->files = $files;
+        // $this->cookies = $cookies;
     }
 
-    public function getPost(): array<T>
+    private function store(string $global, array<Tk, Tv> $data): void
+    {
+        foreach($data as $key => $value)
+        {
+            $this->$global[$key] = $value;
+        }
+    }
+
+    public function getPost(): Map<Tk, Tv>
     {
         return $this->post;
     }
 
-    public function getGet(): array<T>
+    public function getGet(): Map<Tk, Tv>
     {
         return $this->get;
     }
 
-    public function getServer(): array<T>
+    public function getServer(): Map<Tk, Tv>
     {
         return $this->server;
     }
 
-    public function getFiles(): array<T>
+    public function getFiles(): Map<Tk, Tv>
     {
         return $this->files;
     }
 
-    public function getCookie(): array<T>
+    public function getCookie(): Map<Tk, Tv>
     {
         return $this->cookie;
     }

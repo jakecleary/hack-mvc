@@ -19,7 +19,7 @@ function main(): void
     $request = new Omega\Http\Request($_GET, $_POST, $_SERVER, $_FILES, $_COOKIE);
 
     echo '<pre>';
-    var_dump($request->getServer());
+    var_dump($request->server->get('REQUEST_START_TIME'));
     echo '</pre>';
 }
 

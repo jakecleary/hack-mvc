@@ -1,6 +1,6 @@
 <?hh //strict
 
-namespace Michael\Http;
+namespace Omega\Http;
 
 /**
  * A class for managing, storing, and accessing data from superglobal variables.

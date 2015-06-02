@@ -1,6 +1,6 @@
 <?hh //strict
 
-namespace Michael\Http;
+namespace Omega\Http;
 
 /**
  * Class to encapsulate the HTTP requests to the application.

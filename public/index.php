@@ -16,7 +16,7 @@ require_once APP_FOLDER . '/vendor/autoload.php';
  */
 function main(): void
 {
-    new HackMvc\Welcome('goodbye');
+    new Alpha\Welcome('goodbye');
 }
 
 main();

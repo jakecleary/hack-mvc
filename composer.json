@@ -13,8 +13,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Gob\\": "app/",
-            "Michael\\": "lib/"
+            "Alpha\\": "app/",
+            "Omega\\": "lib/"
         }
     }
 }
